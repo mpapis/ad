@@ -9,7 +9,7 @@ set :repository,  "git://github.com/mpapis/ad.git"
 set :rvm_ruby_string, '1.9.3@ad'
 set :rvm_type, :user
 set :bundle_without,  [:development]
-set :unicorn_pid, "/home/ad/app/shared/pids/unicorn.pid"
+set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 
 server "niczsoft.com", :app, :web, :db, :primary => true
 
