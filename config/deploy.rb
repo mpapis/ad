@@ -5,6 +5,7 @@ set :user, "#{application}"
 set :use_sudo, false
 set :scm, :git
 set :repository,  "git://github.com/mpapis/ad.git"
+set :keep_releases, 5
 
 set :rvm_ruby_string, `rvm current`
 set :rvm_type, :user
@@ -15,8 +16,9 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 server "niczsoft.com", :app, :web, :db, :primary => true
 
 before 'deploy:restart', 'deploy:migrate'
-before 'deploy:setup', 'rvm:install_rvm'
-before 'deploy:setup', 'rvm:install_ruby'
+before 'deploy:setup',   'rvm:install_rvm'
+before 'deploy:setup',   'rvm:install_ruby'
+after  'deploy',         'deploy:cleanup'
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
