@@ -18,7 +18,7 @@ before 'deploy:setup',   'rvm:install_rvm'
 before 'deploy:setup',   'rvm:install_ruby'
 after  'deploy',         'deploy:cleanup'
 
-require "rvm-capistrano"
+require "rvm/capistrano"
 require "bundler/capistrano"
 require "capistrano-unicorn"
 require "capistrano-file_db"
