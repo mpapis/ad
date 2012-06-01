@@ -14,8 +14,12 @@ set :unicorn_pid, "#{shared_path}/pids/unicorn.pid"
 server "niczsoft.com", :app, :web, :db, :primary => true
 
 before 'deploy:restart', 'deploy:migrate'
-before 'deploy:setup',   'rvm:install_rvm'
-before 'deploy:setup',   'rvm:install_ruby'
+# Install RVM
+before 'deploy',         'rvm:install_rvm'
+# Install Ruby
+before 'deploy',         'rvm:install_ruby'
+# Or create gemset
+#before 'deploy',         'rvm:create_gemset'
 after  'deploy',         'deploy:cleanup'
 
 require "rvm/capistrano"
