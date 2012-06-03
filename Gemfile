@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '~> 3.2'
 gem 'sqlite3'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', '~> 3.0.0' # To use ActiveModel has_secure_password
