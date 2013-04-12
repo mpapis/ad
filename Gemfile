@@ -5,7 +5,6 @@ source 'https://rubygems.org'
 gem 'rails', '~> 3.2'
 gem 'sqlite3'
 gem 'jquery-rails'
-gem 'bcrypt-ruby', '~> 3.0.0' # To use ActiveModel has_secure_password
 gem 'unicorn'                 # Use unicorn as the app server
 
 # To use Jbuilder templates for JSON
@@ -14,9 +13,9 @@ gem 'unicorn'                 # Use unicorn as the app server
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails',   '~> 3.2'
+  gem 'coffee-rails', '~> 3.2'
+  gem 'uglifier'
 end
 
 group :production do
@@ -27,5 +26,5 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'capistrano-file_db'
-  gem 'rvm-capistrano'
+  gem 'rvm-capistrano', '>=1.3.0.rc4'
 end
