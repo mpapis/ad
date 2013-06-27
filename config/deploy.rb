@@ -1,4 +1,3 @@
-set :rvm_require_role, :app
 require "rvm/capistrano"
 require "bundler/capistrano"
 require "capistrano-unicorn"
