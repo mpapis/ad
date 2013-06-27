@@ -1,4 +1,4 @@
-#ruby=1.9.3@ad
+#ruby=2.0.0@ad
 
 source 'https://rubygems.org'
 
@@ -26,5 +26,5 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'capistrano-file_db'
-  gem 'rvm-capistrano', '>=1.3.0.rc4'
+  gem 'rvm-capistrano', '>=1.3.3'
 end
