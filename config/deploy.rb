@@ -15,7 +15,7 @@ set :repository,  "git://github.com/mpapis/ad.git"
 set :keep_releases, 5
 
 set :rvm_autolibs_flag, "read-only" # more info: rvm help autolibs
-set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"")
+set :rvm_ruby_string, :local
 set :bundle_dir, ''
 set :bundle_flags, '--system --quiet'
 set :bundle_without,  [:development]
