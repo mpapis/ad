@@ -26,5 +26,5 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-unicorn'
   gem 'capistrano-file_db'
-  gem 'rvm-capistrano', '>=1.4.0.rc1'
+  gem 'rvm-capistrano', '>=1.5.0'
 end
