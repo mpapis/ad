@@ -23,8 +23,9 @@ group :production do
 end
 
 group :development do
-  gem 'capistrano'
-  gem 'capistrano-unicorn'
-  gem 'capistrano-file_db'
-  gem 'rvm-capistrano', '>=1.5.0'
+  gem 'capistrano', :require => false
+  gem 'capistrano-rails', :require => false
+  gem 'capistrano-unicorn', :require => false
+  gem 'capistrano-file_db', :require => false
+  gem 'rvm1-capistrano3', '>=0.8.0', :require => false
 end
