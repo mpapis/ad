@@ -23,5 +23,6 @@ group :production do
 end
 
 group :development do
-  #gem 'capistrano', :require => false
+  gem 'command-designer', :require => false
+  gem 'remote-exec', :require => false
 end
