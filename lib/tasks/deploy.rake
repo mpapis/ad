@@ -18,20 +18,21 @@ class Deploy < CommandDesigner::Dsl
   end
 
   def validate
-    raise "no path given" if path.nil?
-    raise "no server given" if server.nil?
+    raise("no path given")   if path.nil?
+    raise("no server given") if server.nil?
   end
 
   def prepare_system
-    run(:mkdir, "-p", path)
-    run(:mkdir, "-p", cache)
+    run(:mkdir, "-p", path) &&
+    run(:mkdir, "-p", cache) ||
+      raise("can not create target directories")
   end
 
   def download_code
     command_prefix(:cd, cache) do
       if   run(:test, "-d", ".git")
-      then run(:git, "pull")
-      else run(:git, "clone", repo, ".")
+      then run(:git, "pull")             || raise("can not update sources")
+      else run(:git, "clone", repo, ".") || raise("can not download sources")
       end
     end
   end
