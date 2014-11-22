@@ -23,6 +23,7 @@ class Deploy < CommandDesigner::Dsl
   end
 
   def prepare_system
+    run(:mkdir, "-p", path)
   end
 
   def download_code
@@ -33,6 +34,20 @@ class Deploy < CommandDesigner::Dsl
 
   def migrate_db
   end
+
+private
+
+  def run(*params)
+    cmd = command(*params)
+    puts "Executing: #{cmd}"
+    status = server.execute(cmd)
+    if status == 0
+    then puts "Success"
+    else puts "Failed(#{status})"
+    end
+    return status == 0
+  end
+
 end
 
 desc "Put app on a server"
