@@ -2,7 +2,7 @@ require "command-designer"
 require "remote-exec"
 
 class Deploy < CommandDesigner::Dsl
-  attr_accessor :server, :path
+  attr_accessor :server, :path, :repo
 
   def initialize
     super([:first, nil, :last])
@@ -24,9 +24,16 @@ class Deploy < CommandDesigner::Dsl
 
   def prepare_system
     run(:mkdir, "-p", path)
+    run(:mkdir, "-p", cache)
   end
 
   def download_code
+    command_prefix(:cd, cache) do
+      if   run(:test, "-d", ".git")
+      then run(:git, "pull")
+      else run(:git, "clone", repo, ".")
+      end
+    end
   end
 
   def link_code
@@ -36,6 +43,10 @@ class Deploy < CommandDesigner::Dsl
   end
 
 private
+
+  def cache
+    @cache ||= File.join(path, "cache")
+  end
 
   def run(*params)
     cmd = command(*params)
@@ -48,6 +59,18 @@ private
     return status == 0
   end
 
+  def command_prefix(code, *params, &block)
+    options = Hash === params.last ? params.pop : {}
+    options[:separator] ||= options[:s] || "&&"
+    cmd_prefix = command(code, *params)
+    local_filter(
+      Proc.new { |cmd|
+        "#{cmd_prefix} #{options[:separator]} #{cmd}"
+      },
+      &block
+    )
+  end
+
 end
 
 desc "Put app on a server"
@@ -55,6 +78,7 @@ task :deploy do
   Deploy.new do |deployer|
     deployer.server = RemoteExec::Local.new
     deployer.path   = "/dev/shm/my_app"
+    deployer.repo   = "https://github.com/mpapis/ad.git"
     deployer.deploy
   end
 end
