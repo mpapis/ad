@@ -127,7 +127,7 @@ class ErrorLogger
     if
       status > 0
     then
-      puts "Command #{command.inspect} failed on #{object.inspect}:"
+      puts "Command #{command.inspect} failed on #{object.to_s}:"
       puts @cache[object]
       puts "Return status: #{status}"
     end

@@ -85,7 +85,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
-    remote-exec (0.6.0)
+    remote-exec (0.6.1)
       net-ssh (~> 2.9)
       ruby-hooks (~> 1.2)
       session (~> 3.2)
