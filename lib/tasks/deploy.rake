@@ -45,7 +45,7 @@ class Deploy < CommandDesigner::Dsl
   def copy_code
     run(:mkdir, "-p", release) ||
       raise("can not create release directory")
-    run(:git, "--git-dir", cache, "--work-tree", release, "checkout", "*") ||
+    run(:git, "--git-dir", cache, "--work-tree", release, "checkout", "--", "*") ||
       raise("can not copy sources")
   end
 
