@@ -129,7 +129,6 @@ class ErrorLogger
     then
       puts "Command #{command.inspect} failed on #{object.to_s}:"
       puts @cache[object]
-      puts "Return status: #{status}"
     end
     @cache.delete(object)
   end
