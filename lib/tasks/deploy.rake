@@ -45,11 +45,12 @@ class Deploy < CommandDesigner::Dsl
   def copy_code
     run(:mkdir, "-p", release) ||
       raise("can not create release directory")
-    run(:git, "--git-dir", cache, "--work-tree", release, "checkout") ||
+    run(:git, "--git-dir", cache, "--work-tree", release, "checkout", "*") ||
       raise("can not copy sources")
   end
 
   def link_code
+    run(:ln, "-nsfT", release, current)
   end
 
   def migrate_db
@@ -75,6 +76,10 @@ private
 
   def release
     @release ||= File.join(releases, release_marker)
+  end
+
+  def current
+    @current ||= File.join(path, "current")
   end
 
   def run(*params)
