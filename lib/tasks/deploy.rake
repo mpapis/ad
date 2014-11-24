@@ -13,6 +13,7 @@ class Deploy < CommandDesigner::Dsl
     validate
     prepare_system
     download_code
+    copy_code
     link_code
     migrate_db
   end
@@ -24,17 +25,28 @@ class Deploy < CommandDesigner::Dsl
 
   def prepare_system
     run(:mkdir, "-p", path) &&
-    run(:mkdir, "-p", cache) ||
+    run(:mkdir, "-p", releases) &&
+    run(:mkdir, "-p", temporary) ||
       raise("can not create target directories")
   end
 
   def download_code
-    command_prefix(:cd, cache) do
-      if   run(:test, "-d", ".git")
-      then run(:git, "pull")             || raise("can not update sources")
-      else run(:git, "clone", repo, ".") || raise("can not download sources")
-      end
+    if
+      run(:test, "-d", cache)
+    then
+      run(:git, "--git-dir", cache, "fetch") ||
+        raise("can not update sources")
+    else
+      run(:git, "clone", "--bare", repo, cache) ||
+        raise("can not download sources")
     end
+  end
+
+  def copy_code
+    run(:mkdir, "-p", release) ||
+      raise("can not create release directory")
+    run(:git, "--git-dir", cache, "--work-tree", release, "checkout") ||
+      raise("can not copy sources")
   end
 
   def link_code
@@ -46,7 +58,23 @@ class Deploy < CommandDesigner::Dsl
 private
 
   def cache
-    @cache ||= File.join(path, "cache")
+    @cache ||= File.join(path, "cache.git")
+  end
+
+  def temporary
+    @temporary ||= File.join(path, "tmp")
+  end
+
+  def release_marker
+    @release_marker ||= Time.now.utc.strftime("%Y%m%d_%H%M%S_%N")
+  end
+
+  def releases
+    @releases ||= File.join(path, "releases")
+  end
+
+  def release
+    @release ||= File.join(releases, release_marker)
   end
 
   def run(*params)
