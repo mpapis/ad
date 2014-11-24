@@ -107,11 +107,42 @@ private
 
 end
 
+class ErrorLogger
+  def initialize
+    @cache = {}
+  end
+  def register(target)
+    target. before_execute.add_observer(self, :before_execute)
+    target.on_execute_data.add_observer(self, :on_execute_data)
+    target.  after_execute.add_observer(self, :after_execute)
+  end
+  def before_execute(object, command)
+    @cache[object] = []
+  end
+  def on_execute_data(object, stdout, stderr)
+    @cache[object] << stdout if stdout
+    @cache[object] << stderr if stderr
+  end
+  def after_execute(object, command, status)
+    if
+      status > 0
+    then
+      puts "Command #{command.inspect} failed on #{object.inspect}:"
+      puts @cache[object]
+      puts "Return status: #{status}"
+    end
+    @cache.delete(object)
+  end
+end
+
 desc "Put app on a server"
 task :deploy do
+  error_logger = ErrorLogger.new
   Deploy.new do |deployer|
-    deployer.server = RemoteExec::Local.new
-    deployer.path   = "/dev/shm/my_app"
+    deployer.server = RemoteExec::Ssh.new("niczsoft.com", "mpapis")
+    # deployer.server = RemoteExec::Local.new
+    error_logger.register(deployer.server)
+    deployer.path   = "/home/mpapis/my_app"
     deployer.repo   = "https://github.com/mpapis/ad.git"
     deployer.deploy
   end
