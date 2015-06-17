@@ -8,6 +8,26 @@
 </head>
 <body>
 
+<% if user_signed_in? %>
+<header class="container">
+  <div class="col-sm-6">
+    Hello <%= current_user.email if user_signed_in? %>
+  </div>
+  <div class="col-sm-6 text-right">
+    <ul class="nav nav-pills">
+      <li>
+        <%= link_to "logout", destroy_user_session_path, method: :delete %>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<% if flash[:notice].present? %>
+<p class="alert alert-warning"><%= flash[:notice] %></p>
+<% end %>
+
+<% end %>
+
 <%= yield %>
 
 </body>
