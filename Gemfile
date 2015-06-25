@@ -11,8 +11,7 @@ gem 'unicorn'                 # Use unicorn as the app server
 # gem 'jbuilder'
 gem "devise"
 
-# CSS related
-gem "twitter-bootstrap-rails"
+gem 'bootstrap-sass', '~> 3.3.5'
 
 # Gems used only for assets and not required
 # in production environments by default.
