@@ -29,3 +29,7 @@ group :development do
   gem 'command-designer', :require => false
   gem 'remote-exec', :require => false
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+end
