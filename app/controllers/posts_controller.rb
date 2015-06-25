@@ -43,6 +43,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save
@@ -61,7 +62,10 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
 
     respond_to do |format|
-      if @post.update_attributes(post_params)
+      if !user_is_post_author?
+        format.html { redirect_to @post, error: 'You are not allowed to update that resource!' }
+        format.json { head :no_content }
+      elsif @post.update_attributes(post_params)
         format.html { redirect_to @post, notice: 'Post was successfully updated.' }
         format.json { head :no_content }
       else
@@ -85,7 +89,11 @@ class PostsController < ApplicationController
 
   private
 
+  def user_is_post_author?
+    current_user.id == @post.user_id
+  end
+
   def post_params
-    params.require(:post).permit(:body, :title)
+    params.require(:post).permit(:body, :title, :user_id)
   end
 end
