@@ -10,7 +10,7 @@ gem 'unicorn'                 # Use unicorn as the app server
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 gem "devise"
-
+gem "pry"
 gem 'bootstrap-sass', '~> 3.3.5'
 
 # Gems used only for assets and not required

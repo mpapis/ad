@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :edit, :create, :update]
-  before_action :authorize_user!, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
@@ -94,7 +94,7 @@ class PostsController < ApplicationController
     find_post
     if !user_is_post_author?
       respond_to do |format|
-        format.html { redirect_to action: :index; flash[:alert] = 'You are not allowed to update that resource!' }
+        format.html { redirect_to action: :index; flash[:alert] = "You are not allowed to update that resource!" }
         format.json { head :no_content }
       end
     end
