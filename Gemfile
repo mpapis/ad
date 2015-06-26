@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2'
+gem 'rails', '~> 4.2'
 gem 'sqlite3'
 gem 'jquery-rails'
 gem 'unicorn'                 # Use unicorn as the app server
@@ -13,8 +13,8 @@ gem 'unicorn'                 # Use unicorn as the app server
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2'
-  gem 'coffee-rails', '~> 3.2'
+  gem 'sass-rails', '~> 5.0.3'
+  gem 'coffee-rails', '~> 4.1'
   gem 'uglifier'
 end
 
