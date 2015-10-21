@@ -10,6 +10,7 @@
   <%= @post.body %>
 </p>
 
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<%- if  @post.author == current_author %>
+  <%= link_to 'Edit', edit_post_path(@post)  %> |
+<% end %>
 <%= link_to 'Back', posts_path %>

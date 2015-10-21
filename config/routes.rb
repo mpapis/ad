@@ -1,4 +1,5 @@
 Ad::Application.routes.draw do
+  devise_for :authors
   resources :posts
 
   # The priority is based upon order of creation:
